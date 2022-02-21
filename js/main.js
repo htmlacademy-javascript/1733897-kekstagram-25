@@ -12,7 +12,7 @@ getRandomPositiveInteger ();
 
 
 function stringLength (string, maxLength) {
-  return string <= maxLength;
+  return string.length <= maxLength;
 }
 
-stringLength ();
+stringLength ('Какая-то строка', 140);
