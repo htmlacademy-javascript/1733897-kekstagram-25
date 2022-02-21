@@ -9,3 +9,10 @@ function getRandomPositiveInteger (min, max) {
 }
 
 getRandomPositiveInteger ();
+
+
+function stringLength (string, maxLength) {
+  return (string < maxLength);
+}
+
+stringLength ();
