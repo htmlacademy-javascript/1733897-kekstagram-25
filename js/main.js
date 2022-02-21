@@ -12,7 +12,7 @@ getRandomPositiveInteger ();
 
 
 function stringLength (string, maxLength) {
-  return (string < maxLength);
+  return string <= maxLength;
 }
 
 stringLength ();
