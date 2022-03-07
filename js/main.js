@@ -1,3 +1,4 @@
+
 function getRandomPositiveInteger (min, max) {
 
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
@@ -80,9 +81,9 @@ const createPhoto = () => {
 
 };
 
-const photos = [];
+const phottos = [];
 
 for (let i = 0; i < 25; i++) {
-  photos[i] = createPhoto();
+  phottos[i] = createPhoto();
 }
 
