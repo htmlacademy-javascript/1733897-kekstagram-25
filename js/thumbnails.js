@@ -20,8 +20,7 @@ createPhotos.forEach((photo) => {
 
   pictureElement.querySelector('.picture__img').src = photo.url;
   pictureElement.querySelector('.picture__likes').textContent = photo.likes;
-  pictureElement.querySelector('.picture__comments').textContent = photo.comments.message;
-  console.log(photo.comments);
+  pictureElement.querySelector('.picture__comments').textContent = photo.comments.length;
   documentFragment.appendChild(pictureElement);
 });
 
