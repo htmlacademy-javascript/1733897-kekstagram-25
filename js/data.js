@@ -50,11 +50,10 @@ const createPhoto = () => {
     id: randomId,
     url: `photos/${  randomId  }.jpg`,
     description: '',
-    lakes: randomLikes,
+    likes: randomLikes,
     comments: [
       {
         id: randomIdComments,
-        // eslint-disable-next-line no-useless-concat
         avatar: `img/avatar-${  randomAvatar  }.svg`,
         message: MESSAGES[randomMessageIndex],
         name: NAMES[randomNameIndex]
@@ -65,10 +64,5 @@ const createPhoto = () => {
 
 };
 
-const photos = [];
-
-for (let i = 0; i < 25; i++) {
-  photos[i] = createPhoto();
-}
 
 export {createPhoto};

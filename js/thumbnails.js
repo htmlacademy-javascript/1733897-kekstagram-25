@@ -1,24 +1,31 @@
+/* eslint-disable no-undef */
 import {createPhoto} from './data.js';
 
-const picturesContainer = document.querySelector('.pictures');
+const PHOTOS = 25;
+
+const picturesContainerElement = document.querySelector('.pictures');
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const createPhotos = createPhoto();
-
 const documentFragment = document.createDocumentFragment();
+
+const createPhotos = [];
+
+for (let i = 0; i < PHOTOS; i++) {
+  createPhotos[i] = createPhoto();
+}
 
 createPhotos.forEach((photo) => {
   const pictureElement = pictureTemplate.cloneNode(true);
 
-  pictureElement.querySelector('.picture__img').textContent = photo.url;
+  pictureElement.querySelector('.picture__img').src = photo.url;
   pictureElement.querySelector('.picture__likes').textContent = photo.likes;
-  pictureElement.querySelector('.picture__comments').textContent = photo.comments;
-
+  pictureElement.querySelector('.picture__comments').textContent = photo.comments.message;
+  console.log(photo.comments);
   documentFragment.appendChild(pictureElement);
 });
 
 
-picturesContainer.appendChild(documentFragment);
+picturesContainerElement.appendChild(documentFragment);
 
 
