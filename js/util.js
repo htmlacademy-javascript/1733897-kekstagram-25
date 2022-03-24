@@ -15,4 +15,9 @@ function stringLength (string, maxLength) {
 
 stringLength ('Какая-то строка', 140);
 
-export {getRandomPositiveInteger, stringLength};
+function isEscapeKey(evt) {
+  return evt.key === 'Escape';
+}
+
+
+export {getRandomPositiveInteger, stringLength, isEscapeKey};
