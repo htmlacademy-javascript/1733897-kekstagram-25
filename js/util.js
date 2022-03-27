@@ -9,15 +9,15 @@ function getRandomPositiveInteger (min, max) {
 getRandomPositiveInteger ();
 
 
-function stringLength (string, maxLength) {
+function checkStringLength (string, maxLength) {
   return string.length <= maxLength;
 }
 
-stringLength ('Какая-то строка', 140);
+checkStringLength ('Какая-то строка', 140);
 
 function isEscapeKey(evt) {
   return evt.key === 'Escape';
 }
 
 
-export {getRandomPositiveInteger, stringLength, isEscapeKey};
+export {getRandomPositiveInteger, checkStringLength, isEscapeKey};
