@@ -8,8 +8,9 @@ const innerImage = imagePreview.querySelector('img');
 const sliderWrapperElement = document.querySelector('.img-upload__effect-level');
 let currentEffect = 'none';
 const effectValueElement = document.querySelector('.effect-level__value');
+const sliderElement = document.querySelector('.effect-level__slider');
 
-const EFFECT_SIGN = {
+const UNITS_FILTERS = {
   none: '',
   chrome: '',
   sepia: '',
@@ -17,7 +18,7 @@ const EFFECT_SIGN = {
   phobos: 'px',
   heat: ''
 };
-const EFFECT_STYLE = {
+const TYPE_FILTERS = {
   none: '',
   chrome: 'grayscale',
   sepia: 'sepia',
@@ -25,7 +26,7 @@ const EFFECT_STYLE = {
   phobos: 'blur',
   heat: 'brightness'
 };
-const SLIDER_EFFECT_OPTIONS = {
+const STEPS_INTENSITY_FILTERS = {
   none: {},
 
   chrome: {
@@ -76,7 +77,7 @@ const SLIDER_EFFECT_OPTIONS = {
 
 // Скрипт для изменения масштаба картинки
 
-function changeControl() {
+function changeSize() {
   controlSmallerElement.addEventListener('click', () => {
     let currentValue = parseInt(controlValueElement.value, 10);
     if (currentValue > 25 && currentValue <= 100) {
@@ -93,19 +94,23 @@ function changeControl() {
   });
 }
 
-changeControl();
+changeSize();
 
 // Скрипт для наложения эффекта
 
-function clearEffect() {
+function resetPhotoSettings() {
   sliderWrapperElement.classList.remove('active');
   innerImage.className = 'effects effects__preview--none';
   innerImage.style.filter = '';
+  imagePreview.style.transform = '';
+  controlValueElement.value = '100%';
+  sliderElement.classList.add('hidden');
 }
 
-function initRangeSlider() {
-  const sliderElement = document.querySelector('.effect-level__slider');
+function activatePhotoSettings() {
+
   const imgEffectsElement = document.querySelector('.img-upload__effects');
+  sliderElement.classList.add('hidden');
 
   noUiSlider.create(sliderElement, {
     range: {
@@ -118,19 +123,26 @@ function initRangeSlider() {
 
   sliderElement.noUiSlider.on('update', () => {
     effectValueElement.value = sliderElement.noUiSlider.get();
-    innerImage.style.filter = `${EFFECT_STYLE[currentEffect]}(${effectValueElement.value}${EFFECT_SIGN[currentEffect]})`;
+    innerImage.style.filter = `${TYPE_FILTERS[currentEffect]}(${effectValueElement.value}${UNITS_FILTERS[currentEffect]})`;
+    if (currentEffect !== 'none') {
+      sliderElement.classList.remove('hidden');
+    } else {
+      sliderElement.classList.add('hidden');
+    }
   });
 
   imgEffectsElement.addEventListener('change', (evt) => {
     currentEffect = evt.target.value;
     innerImage.className = `effects effects__preview--${currentEffect}`;
-    sliderElement.noUiSlider.updateOptions(SLIDER_EFFECT_OPTIONS[currentEffect]);
+    sliderElement.noUiSlider.updateOptions(STEPS_INTENSITY_FILTERS[currentEffect]);
     if (currentEffect === 'none') {
-      clearEffect();
+      resetPhotoSettings();
     } else {
       sliderWrapperElement.classList.add('active');
     }
   });
 }
 
-initRangeSlider();
+activatePhotoSettings();
+
+export{resetPhotoSettings};
