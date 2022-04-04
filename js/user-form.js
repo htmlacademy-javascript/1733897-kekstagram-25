@@ -1,4 +1,5 @@
 import { isEscapeKey, checkStringLength } from './util.js';
+import {resetPhotoSettings} from './scale.js';
 
 
 const formElement = document.querySelector('.img-upload__form');
@@ -39,7 +40,7 @@ function checkMaxLength(string) {
 }
 
 function checkHashtag(string) {
-  return string.split(' ').filter((item) => item !== '').every((item) => item[0] === '#');
+  return string.split(' ').filter((item) => item !== '').every((item) => item.startsWith('#'));
 }
 
 function checkSymbols(string) {
@@ -52,17 +53,13 @@ function checkSymbols(string) {
 }
 
 function checkUnique(string) {
-  const hashtags = string.split(' ').filter((item) => item !== '');
-  const allUnique = !hashtags.some((item, index) => hashtags.indexOf(item) < index);
-  return allUnique;
+  const hashtags = string.split(' ').filter(Boolean);
+  return hashtags.length === new Set(hashtags).size;
 }
 
 function checkCount(string) {
   const hashtags = string.split(' ').filter(Boolean);
-  if (hashtags.length > HASGTAGS_COUNTS) {
-    return false;
-  }
-  return true;
+  return hashtags.length <= HASGTAGS_COUNTS;
 }
 
 pristine.addValidator(hashtagElement, checkMinLength, 'hashtag length min 2 symbols');
@@ -93,6 +90,7 @@ function closeUpload () {
   bodyTagElement.classList.remove('modal-open');
   openFormElement.value = '';
   document.removeEventListener('keydown', onUploadEscKeydown);
+  resetPhotoSettings();
 }
 
 const onFocus = () => {
