@@ -64,5 +64,4 @@ const createPhoto = () => {
 
 };
 
-
 export {createPhoto};

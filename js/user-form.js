@@ -19,14 +19,27 @@ const pristine = new Pristine(formElement, {
   errorTextClass: 'img-upload__text',
 });
 
+
 formElement.addEventListener('submit', (evt) => {
+  evt.preventDefault();
 
   const isValid = pristine.validate();
   if (isValid) {
     hashtagElement.style.background = '';
+
+    const formData = new FormData(evt.target);
+
+    fetch ('https://25.javascript.pages.academy/kekstagram',
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
+    hashtagElement.value = '';
+    commentsElement. value = '';
+    closeUpload();
   } else {
     hashtagElement.style.background = 'pink';
-    evt.preventDefault();
   }
 });
 
@@ -111,3 +124,5 @@ const initializeForm = () => {
 };
 
 initializeForm();
+
+
