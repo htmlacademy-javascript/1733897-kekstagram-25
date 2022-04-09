@@ -30,12 +30,13 @@ const setUserFormSubmit = (onSuccess) => {
     if (isValid) {
       hashtagElement.style.background = '';
 
-      //const formData = new FormData(evt.target);
+      const formData = new FormData(evt.target);
       sendData (
         () => onSuccess(),
-        () => showsErrorMessage()
+        () => showsErrorMessage(),
+        formData
       );
-      new FormData(evt.target);
+      //new FormData(evt.target);
 
       /*fetch ('https://25.javascript.pages.academy/kekstagram',
         {
