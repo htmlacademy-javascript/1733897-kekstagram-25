@@ -1,6 +1,7 @@
 import { isEscapeKey, checkStringLength } from './util.js';
 import {resetPhotoSettings} from './scale.js';
-//import {showsSuccessMessage} from './upload-message.js';
+import {showsErrorMessage} from './upload-message.js';
+import {sendData} from './api.js';
 
 
 const formElement = document.querySelector('.img-upload__form');
@@ -29,18 +30,22 @@ const setUserFormSubmit = (onSuccess) => {
     if (isValid) {
       hashtagElement.style.background = '';
 
-      const formData = new FormData(evt.target);
+      //const formData = new FormData(evt.target);
+      sendData (
+        () => onSuccess(),
+        () => showsErrorMessage()
+      );
+      new FormData(evt.target);
 
-      fetch ('https://25.javascript.pages.academy/kekstagram',
+      /*fetch ('https://25.javascript.pages.academy/kekstagram',
         {
           method: 'POST',
           body: formData,
         }
       )
-        .then(() => onSuccess());
-      //closeUpload();
-      //formElement.reset();
-      //showsSuccessMessage();
+        .then(() => onSuccess())
+        .catch(() => showsErrorMessage());*/
+
 
     } else {
       hashtagElement.style.background = 'pink';

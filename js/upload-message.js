@@ -10,10 +10,21 @@ const onSuccessTemplate = document.querySelector('#success').content.querySelect
 const onErrorTemplate = document.querySelector('#error').content.querySelector('.error');
 const uploadMessageTemplate = document.querySelector('#messages').content.querySelector('.img-upload__message');
 const documentFragment = document.createDocumentFragment();
+let messageOnSuccess = null;
+let messageOnError = null;
 
 
 const deleteMessage = () => {
-  documentFragment.remove();
+  if (messageOnSuccess) {
+    messageOnSuccess.remove();
+  }
+  bodyTagElement.classList.remove('modal-open');
+};
+
+const deleteErrorMessage = () => {
+  if (messageOnError) {
+    messageOnError.remove();
+  }
   bodyTagElement.classList.remove('modal-open');
 };
 
@@ -21,6 +32,7 @@ const onEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     deleteMessage();
+    deleteErrorMessage();
   }
 };
 
@@ -28,32 +40,53 @@ const onEscKeydown = (evt) => {
 
 const showsSuccessMessage = () => {
 
-  const messageOnSuccess = onSuccessTemplate.cloneNode(true);
+  messageOnSuccess = onSuccessTemplate.cloneNode(true);
   documentFragment.appendChild(messageOnSuccess);
   bodyTagElement.appendChild(documentFragment);
   bodyTagElement.classList.add('modal-open');
   formElement.reset();
   closeUpload();
 
+  document.addEventListener ('click', (event) => {
+    if (event.target.classList.contains('success__inner')) {
+      return;
+    }
+    deleteMessage();
+  });
+
   const successButton = onSuccessTemplate.querySelector('.success__button');
   successButton.addEventListener('click', deleteMessage);
 
   document.addEventListener('keydown', onEscKeydown);
 
-  document.addEventListener('click', (evt) => {
+  /*document.addEventListener('click', (evt) => {
     if (!messageOnSuccess.contains(evt.target)) {
       messageOnSuccess.style.display = 'none';
     }
-  });
+  });*/
 };
 
 const showsErrorMessage = () => {
 
-  const messageOnError = onErrorTemplate.cloneNode(true);
+  messageOnError = onErrorTemplate.cloneNode(true);
   documentFragment.appendChild(messageOnError);
   bodyTagElement.appendChild(documentFragment);
   bodyTagElement.classList.add('modal-open');
+  closeUpload();
+
+  document.addEventListener ('click', (event) => {
+    if (event.target.classList.contains('error__inner')) {
+      return;
+    }
+    deleteErrorMessage();
+  });
+
+  const errorButton = onErrorTemplate.querySelector('.error__button');
+  errorButton.addEventListener('click', deleteErrorMessage);
+
+  document.addEventListener('keydown', onEscKeydown);
 };
+
 
 const showsUploadMessage = () => {
 
