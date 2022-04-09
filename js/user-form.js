@@ -36,18 +36,6 @@ const setUserFormSubmit = (onSuccess) => {
         () => showsErrorMessage(),
         formData
       );
-      //new FormData(evt.target);
-
-      /*fetch ('https://25.javascript.pages.academy/kekstagram',
-        {
-          method: 'POST',
-          body: formData,
-        }
-      )
-        .then(() => onSuccess())
-        .catch(() => showsErrorMessage());*/
-
-
     } else {
       hashtagElement.style.background = 'pink';
     }

@@ -58,12 +58,6 @@ const showsSuccessMessage = () => {
   successButton.addEventListener('click', deleteMessage);
 
   document.addEventListener('keydown', onEscKeydown);
-
-  /*document.addEventListener('click', (evt) => {
-    if (!messageOnSuccess.contains(evt.target)) {
-      messageOnSuccess.style.display = 'none';
-    }
-  });*/
 };
 
 const showsErrorMessage = () => {
