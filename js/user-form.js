@@ -1,5 +1,6 @@
 import { isEscapeKey, checkStringLength } from './util.js';
 import {resetPhotoSettings} from './scale.js';
+//import {showsSuccessMessage} from './upload-message.js';
 
 
 const formElement = document.querySelector('.img-upload__form');
@@ -13,35 +14,39 @@ const hashtagValidate = /^#[A-Za-zA-Яа-яËё0-9]{1,19}$/;
 const MAXLENGTH_HASHTAGS_SYMBOLS = 20;
 const HASGTAGS_COUNTS = 5;
 
+
 const pristine = new Pristine(formElement, {
   classTo: 'img-upload__text',
   errorTextParent: 'img-upload__text',
   errorTextClass: 'img-upload__text',
 });
 
+const setUserFormSubmit = (onSuccess) => {
+  formElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
 
-formElement.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      hashtagElement.style.background = '';
 
-  const isValid = pristine.validate();
-  if (isValid) {
-    hashtagElement.style.background = '';
+      const formData = new FormData(evt.target);
 
-    const formData = new FormData(evt.target);
+      fetch ('https://25.javascript.pages.academy/kekstagram',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      )
+        .then(() => onSuccess());
+      //closeUpload();
+      //formElement.reset();
+      //showsSuccessMessage();
 
-    fetch ('https://25.javascript.pages.academy/kekstagram',
-      {
-        method: 'POST',
-        body: formData,
-      }
-    );
-    hashtagElement.value = '';
-    commentsElement. value = '';
-    closeUpload();
-  } else {
-    hashtagElement.style.background = 'pink';
-  }
-});
+    } else {
+      hashtagElement.style.background = 'pink';
+    }
+  });
+};
 
 
 function checkMinLength(string) {
@@ -90,7 +95,6 @@ const onUploadEscKeydown = (evt) => {
   }
 };
 
-
 function openUpload (evt) {
   previewElement.src = URL.createObjectURL(evt.target.files[0]);
   uploadPhotoElement.classList.remove('hidden');
@@ -125,4 +129,4 @@ const initializeForm = () => {
 
 initializeForm();
 
-
+export{setUserFormSubmit, closeUpload};

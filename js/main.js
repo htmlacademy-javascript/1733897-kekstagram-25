@@ -1,5 +1,6 @@
 import {renderPhoto} from './thumbnails.js';
-import './user-form.js';
+import {setUserFormSubmit} from './user-form.js';
+import {showsSuccessMessage} from './upload-message.js';
 import './scale.js';
 
 //import './fetch.js';
@@ -11,4 +12,4 @@ fetch('https://25.javascript.pages.academy/kekstagram/data')
   })
   .catch();
 
-
+setUserFormSubmit(showsSuccessMessage);
