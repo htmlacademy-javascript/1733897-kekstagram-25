@@ -1,30 +1,18 @@
-/* eslint-disable no-undef */
-import {createPhoto} from './data.js';
-
-const PHOTOS = 25;
-
 const picturesContainerElement = document.querySelector('.pictures');
-
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const documentFragment = document.createDocumentFragment();
+const renderPhoto = (createPhotos) => {
+  const documentFragment = document.createDocumentFragment();
 
-const createPhotos = [];
+  createPhotos.forEach((photo) => {
+    const pictureElement = pictureTemplate.cloneNode(true);
+    pictureElement.querySelector('.picture__img').src = photo.url;
+    pictureElement.querySelector('.picture__likes').textContent = photo.likes;
+    pictureElement.querySelector('.picture__comments').textContent = photo.comments.length;
+    documentFragment.appendChild(pictureElement);
+  });
 
-for (let i = 0; i < PHOTOS; i++) {
-  createPhotos[i] = createPhoto();
-}
+  picturesContainerElement.appendChild(documentFragment);
+};
 
-createPhotos.forEach((photo) => {
-  const pictureElement = pictureTemplate.cloneNode(true);
-
-  pictureElement.querySelector('.picture__img').src = photo.url;
-  pictureElement.querySelector('.picture__likes').textContent = photo.likes;
-  pictureElement.querySelector('.picture__comments').textContent = photo.comments.length;
-  documentFragment.appendChild(pictureElement);
-});
-
-
-picturesContainerElement.appendChild(documentFragment);
-
-
+export{renderPhoto};

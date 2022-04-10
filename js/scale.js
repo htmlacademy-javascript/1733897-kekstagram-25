@@ -10,7 +10,7 @@ let currentEffect = 'none';
 const effectValueElement = document.querySelector('.effect-level__value');
 const sliderElement = document.querySelector('.effect-level__slider');
 
-const UNITS_FILTERS = {
+const unitsFilters = {
   none: '',
   chrome: '',
   sepia: '',
@@ -18,7 +18,7 @@ const UNITS_FILTERS = {
   phobos: 'px',
   heat: ''
 };
-const TYPE_FILTERS = {
+const typeFilters = {
   none: '',
   chrome: 'grayscale',
   sepia: 'sepia',
@@ -26,7 +26,7 @@ const TYPE_FILTERS = {
   phobos: 'blur',
   heat: 'brightness'
 };
-const STEPS_INTENSITY_FILTERS = {
+const stepsIntensityFilters = {
   none: {},
 
   chrome: {
@@ -123,7 +123,7 @@ function activatePhotoSettings() {
 
   sliderElement.noUiSlider.on('update', () => {
     effectValueElement.value = sliderElement.noUiSlider.get();
-    innerImage.style.filter = `${TYPE_FILTERS[currentEffect]}(${effectValueElement.value}${UNITS_FILTERS[currentEffect]})`;
+    innerImage.style.filter = `${typeFilters[currentEffect]}(${effectValueElement.value}${unitsFilters[currentEffect]})`;
     if (currentEffect !== 'none') {
       sliderElement.classList.remove('hidden');
     } else {
@@ -134,7 +134,7 @@ function activatePhotoSettings() {
   imgEffectsElement.addEventListener('change', (evt) => {
     currentEffect = evt.target.value;
     innerImage.className = `effects effects__preview--${currentEffect}`;
-    sliderElement.noUiSlider.updateOptions(STEPS_INTENSITY_FILTERS[currentEffect]);
+    sliderElement.noUiSlider.updateOptions(stepsIntensityFilters[currentEffect]);
     if (currentEffect === 'none') {
       resetPhotoSettings();
     } else {
