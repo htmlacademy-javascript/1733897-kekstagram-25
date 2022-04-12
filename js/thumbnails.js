@@ -1,3 +1,7 @@
+import {serverPhotos} from './api.js';
+import {debounce} from './util.js';
+const renderDelay = 500;
+
 const picturesContainerElement = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const imgFiltersElement = document.querySelector('.img-filters');
@@ -35,36 +39,41 @@ const clearPicturesContainer = () => {
 
 // Функция показывает 10 рандомных фотографий
 
-const showsTenRandomPhoto = (photos) => {
-
-  filterRandomElement.addEventListener('click', () => {
-    filterRandomElement.classList.add('img-filters__button--active');
-    filterDefoultElement.classList.remove('img-filters__button--active');
-    filterDiscussedElement.classList.remove('img-filters__button--active');
-  });
-  //clearPicturesContainer();
-  const random = photos.sort(() => .5 - Math.random()).slice(0,10);
-  return random;
-};
+const showsTenRandomPhoto = debounce((photos) => {
+  const shuffled = photos.slice().sort(() => 0.5 - Math.random());
+  const random = shuffled.slice(0, 10);
+  return renderPhoto(random);}, renderDelay);
 
 // Функция показывает самые обсуждаемые фото
 
-const showsDiscussedPhoto = (photos) => {
+const showsDiscussedPhoto = debounce((photos) => {
+  const discussed = photos.slice().sort((a, b) => (a.comments.length < b.comments.length) ? 1 : -1);
+  renderPhoto(discussed);}, renderDelay);
 
-  filterDiscussedElement.addEventListener('click', () => {
-    filterRandomElement.classList.remove('img-filters__button--active');
-    filterDefoultElement.classList.remove('img-filters__button--active');
-    filterDiscussedElement.classList.add('img-filters__button--active');
-  });
-  //clearPicturesContainer();
-  const discussed = photos.sort((a, b) => (a.color > b.color) ? 1 : -1);
-  return discussed;
-};
-
+// Обработчики кнопок фильтра
+// Случайные
+filterRandomElement.addEventListener('click', () => {
+  filterRandomElement.classList.add('img-filters__button--active');
+  filterDefoultElement.classList.remove('img-filters__button--active');
+  filterDiscussedElement.classList.remove('img-filters__button--active');
+  clearPicturesContainer();
+  showsTenRandomPhoto(serverPhotos);
+});
+// Обсуждаемые
+filterDiscussedElement.addEventListener('click', () => {
+  filterRandomElement.classList.remove('img-filters__button--active');
+  filterDefoultElement.classList.remove('img-filters__button--active');
+  filterDiscussedElement.classList.add('img-filters__button--active');
+  clearPicturesContainer();
+  showsDiscussedPhoto(serverPhotos);
+});
+// По умолчанию
 filterDefoultElement.addEventListener('click', () => {
   filterRandomElement.classList.remove('img-filters__button--active');
   filterDefoultElement.classList.add('img-filters__button--active');
   filterDiscussedElement.classList.remove('img-filters__button--active');
+  clearPicturesContainer();
+  renderPhoto(serverPhotos);
 });
 
 
