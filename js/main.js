@@ -1,4 +1,4 @@
-import {renderPhoto} from './thumbnails.js';
+import {renderPhoto, showsFiltersPhotos} from './thumbnails.js';
 import {setUserFormSubmit} from './user-form.js';
 import {showsSuccessMessage} from './upload-message.js';
 import {getData} from './api.js';
@@ -10,3 +10,5 @@ getData ((photos) => {
 });
 
 setUserFormSubmit(showsSuccessMessage);
+showsFiltersPhotos();
+

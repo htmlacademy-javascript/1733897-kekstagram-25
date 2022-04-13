@@ -15,12 +15,15 @@ const hashtagValidate = /^#[A-Za-zA-Яа-яËё0-9]{1,19}$/;
 const MAXLENGTH_HASHTAGS_SYMBOLS = 20;
 const HASGTAGS_COUNTS = 5;
 
+// Привинчиваем Pristine
 
 const pristine = new Pristine(formElement, {
   classTo: 'img-upload__text',
   errorTextParent: 'img-upload__text',
   errorTextClass: 'img-upload__text',
 });
+
+// Обработчик отправки фотографий
 
 const setUserFormSubmit = (onSuccess) => {
   formElement.addEventListener('submit', (evt) => {
