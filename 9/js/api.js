@@ -1,11 +1,15 @@
+let serverPhotos = [];
+
 const getData = (onSuccess) => {
   fetch('https://25.javascript.pages.academy/kekstagram/data')
     .then((response) => response.json())
     .then((photos) => {
       onSuccess(photos);
+      serverPhotos = photos;
     })
     .catch();
 };
+
 
 const sendData = (onSuccess, onFail, body) => {
   fetch ('https://25.javascript.pages.academy/kekstagram',
@@ -20,4 +24,4 @@ const sendData = (onSuccess, onFail, body) => {
     });
 };
 
-export {getData, sendData};
+export {getData, sendData, serverPhotos};
