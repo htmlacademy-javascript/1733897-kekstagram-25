@@ -3,6 +3,7 @@ import {setUserFormSubmit} from './user-form.js';
 import {showsSuccessMessage} from './upload-message.js';
 import {getData} from './api.js';
 import './scale.js';
+import './fullsize-thumbnails.js';
 
 
 getData ((photos) => {
