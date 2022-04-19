@@ -11,7 +11,7 @@ const socialCommentsListElement = bigPictureElement.querySelector('.social__comm
 const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 const socialCommentCount = bigPictureElement.querySelector('.social__comment-count');
 const commentsCount = socialCommentCount.querySelector('span');
-const commentsLoader = bigPictureElement.querySelector('.comments-loader');
+
 
 const closeBigPicture = () => {
   bigPictureElement.classList.add('hidden');
