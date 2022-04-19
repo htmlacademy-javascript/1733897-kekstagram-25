@@ -1,4 +1,4 @@
-import { isEscapeKey, checkStringLength } from './util.js';
+import { checkStringLength, onUploadEscKeydown } from './util.js';
 import {resetPhotoSettings} from './scale.js';
 import {showsErrorMessage} from './upload-message.js';
 import {sendData} from './api.js';
@@ -46,36 +46,28 @@ const setUserFormSubmit = (onSuccess) => {
 };
 
 
-function checkMinLength(string) {
-  return string.split(' ').filter((item) => item !== '').every((item) => item.length >= 2);
-}
+const checkMinLength = (string) => string.split(' ').filter((item) => item !== '').every((item) => item.length >= 2);
 
-function checkMaxLength(string) {
-  return string.split(' ').filter((item) => item !== '').every((item) => checkStringLength (item, MAXLENGTH_HASHTAGS_SYMBOLS));
-}
+const checkMaxLength = (string) => string.split(' ').filter((item) => item !== '').every((item) => checkStringLength (item, MAXLENGTH_HASHTAGS_SYMBOLS));
 
-function checkHashtag(string) {
-  return string.split(' ').filter((item) => item !== '').every((item) => item.startsWith('#'));
-}
+const checkHashtag = (string) => string.split(' ').filter((item) => item !== '').every((item) => item.startsWith('#'));
 
-function checkSymbols(string) {
-  return string.split(' ').filter((item) => item !== '').every((item) => {
-    if (item.length > 1) {
-      return hashtagValidate.test(item);
-    }
-    return true;
-  });
-}
+const checkSymbols = (string) => string.split(' ').filter((item) => item !== '').every((item) => {
+  if (item.length > 1) {
+    return hashtagValidate.test(item);
+  }
+  return true;
+});
 
-function checkUnique(string) {
+const checkUnique = (string) => {
   const hashtags = string.split(' ').filter(Boolean);
   return hashtags.length === new Set(hashtags).size;
-}
+};
 
-function checkCount(string) {
+const checkCount =(string) => {
   const hashtags = string.split(' ').filter(Boolean);
   return hashtags.length <= HASGTAGS_COUNTS;
-}
+};
 
 pristine.addValidator(hashtagElement, checkMinLength, 'hashtag length min 2 symbols');
 pristine.addValidator(hashtagElement, checkMaxLength, 'hashtag length max 20 symbols');
@@ -84,28 +76,20 @@ pristine.addValidator(hashtagElement, checkSymbols, 'wrong symbol');
 pristine.addValidator(hashtagElement, checkUnique, 'this hashtag already exist');
 pristine.addValidator(hashtagElement, checkCount, 'max 5 hashtags');
 
-
-const onUploadEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeUpload();
-  }
-};
-
-function openUpload (evt) {
-  previewElement.src = URL.createObjectURL(evt.target.files[0]);
-  uploadPhotoElement.classList.remove('hidden');
-  bodyTagElement.classList.add('modal-open');
-  document.addEventListener('keydown', onUploadEscKeydown);
-}
-
-function closeUpload () {
+const closeUpload = () => {
   uploadPhotoElement.classList.add('hidden');
   bodyTagElement.classList.remove('modal-open');
   openFormElement.value = '';
   document.removeEventListener('keydown', onUploadEscKeydown);
   resetPhotoSettings();
-}
+};
+
+const openUpload = (evt) => {
+  previewElement.src = URL.createObjectURL(evt.target.files[0]);
+  uploadPhotoElement.classList.remove('hidden');
+  bodyTagElement.classList.add('modal-open');
+  document.addEventListener('keydown', onUploadEscKeydown);
+};
 
 const onFocus = () => {
   commentsElement.addEventListener('focus', () => {

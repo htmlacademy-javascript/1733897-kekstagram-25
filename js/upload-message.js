@@ -48,10 +48,9 @@ const showsSuccessMessage = () => {
   closeUpload();
 
   document.addEventListener ('click', (event) => {
-    if (event.target.classList.contains('success__inner')) {
-      return;
+    if (!event.target.classList.contains('success__inner')) {
+      deleteMessage();
     }
-    deleteMessage();
   });
 
   const successButton = onSuccessTemplate.querySelector('.success__button');
@@ -69,10 +68,9 @@ const showsErrorMessage = () => {
   closeUpload();
 
   document.addEventListener ('click', (event) => {
-    if (event.target.classList.contains('error__inner')) {
-      return;
+    if (!event.target.classList.contains('error__inner')) {
+      deleteErrorMessage();
     }
-    deleteErrorMessage();
   });
 
   const errorButton = onErrorTemplate.querySelector('.error__button');
