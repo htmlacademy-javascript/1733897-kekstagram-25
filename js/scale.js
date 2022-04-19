@@ -9,6 +9,7 @@ const sliderWrapperElement = document.querySelector('.img-upload__effect-level')
 let currentEffect = 'none';
 const effectValueElement = document.querySelector('.effect-level__value');
 const sliderElement = document.querySelector('.effect-level__slider');
+const imgEffectsElement = document.querySelector('.img-upload__effects');
 
 const unitsFilters = {
   none: '',
@@ -77,7 +78,7 @@ const stepsIntensityFilters = {
 
 // Скрипт для изменения масштаба картинки
 
-function changeSize() {
+const changeSize = () => {
   controlSmallerElement.addEventListener('click', () => {
     let currentValue = parseInt(controlValueElement.value, 10);
     if (currentValue > 25 && currentValue <= 100) {
@@ -92,24 +93,23 @@ function changeSize() {
       controlValueElement.value = `${currentValue}%`;
       imagePreview.style.transform = `scale(${currentValue}%)`;}
   });
-}
+};
 
 changeSize();
 
 // Скрипт для наложения эффекта
 
-function resetPhotoSettings() {
+const resetPhotoSettings = () => {
   sliderWrapperElement.classList.remove('active');
   innerImage.className = 'effects effects__preview--none';
   innerImage.style.filter = '';
   imagePreview.style.transform = '';
   controlValueElement.value = '100%';
   sliderElement.classList.add('hidden');
-}
+};
 
-function activatePhotoSettings() {
+const activatePhotoSettings = () => {
 
-  const imgEffectsElement = document.querySelector('.img-upload__effects');
   sliderElement.classList.add('hidden');
 
   noUiSlider.create(sliderElement, {
@@ -141,7 +141,7 @@ function activatePhotoSettings() {
       sliderWrapperElement.classList.add('active');
     }
   });
-}
+};
 
 activatePhotoSettings();
 

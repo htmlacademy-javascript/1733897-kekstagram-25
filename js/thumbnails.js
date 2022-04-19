@@ -1,5 +1,6 @@
 import {serverPhotos} from './api.js';
 import {debounce} from './util.js';
+import {onRandomPhotoChange} from './fullsize-thumbnails.js';
 const renderDelay = 500;
 
 const picturesContainerElement = document.querySelector('.pictures');
@@ -18,6 +19,7 @@ const renderPhoto = (createPhotos) => {
     pictureElement.querySelector('.picture__likes').textContent = photo.likes;
     pictureElement.querySelector('.picture__comments').textContent = photo.comments.length;
     documentFragment.appendChild(pictureElement);
+    pictureElement.addEventListener('click', () => onRandomPhotoChange(photo));
   });
 
   picturesContainerElement.appendChild(documentFragment);
