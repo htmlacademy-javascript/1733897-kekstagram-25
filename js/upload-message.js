@@ -47,8 +47,8 @@ const showsSuccessMessage = () => {
   formElement.reset();
   closeUpload();
 
-  document.addEventListener ('click', (event) => {
-    if (!event.target.classList.contains('success__inner')) {
+  document.addEventListener ('click', (evt) => {
+    if (!evt.target.classList.contains('success__inner')) {
       deleteMessage();
     }
   });
@@ -67,8 +67,8 @@ const showsErrorMessage = () => {
   bodyTagElement.classList.add('modal-open');
   closeUpload();
 
-  document.addEventListener ('click', (event) => {
-    if (!event.target.classList.contains('error__inner')) {
+  document.addEventListener ('click', (evt) => {
+    if (!evt.target.classList.contains('error__inner')) {
       deleteErrorMessage();
     }
   });
